@@ -1,6 +1,7 @@
 // =====================================================================
-//  SF ADMIN SCENARIO QUIZ — Question Bank
-//  Fixed 40 questions per session: 20 Scenario + 20 MCQ
+//  SF APEX DEVELOPER ASSESSMENT — Question Bank
+//  Fixed 45 questions: 20 Scenario + 20 MCQ + 5 Live Coding
+//  Topics: Apex Core + Apex Triggers
 //  Questions appear in fixed order — no randomisation
 // =====================================================================
 
@@ -14,181 +15,181 @@ const QUESTIONS = [
     id: 1,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Security & Access",
-    scenario: "A retail company has 300 sales reps, 20 regional managers, and 5 VPs. Sales reps should only see their own Opportunity records. Regional managers should see all records owned by reps in their region. VPs need visibility across all regions. A sensitive 'Negotiated Price' field must be hidden from reps but visible to managers and above.",
-    question: "Design the complete security model for this organisation. Explain your OWD settings, role hierarchy structure, any sharing rules required, and how you would configure field-level security for the Negotiated Price field.",
-    placeholder: "Describe your OWD settings, role hierarchy levels, sharing rules, and FLS configuration in detail..."
+    category: "Data Types & Variables",
+    scenario: "A developer stores a product price in an Integer variable. When the price is 99.99, the stored value becomes 99 and causes wrong invoice totals.",
+    question: "What went wrong with the data type choice? Which Apex data type should be used for decimal values like prices? List at least four Apex primitive data types with a simple example of when to use each.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 2,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Profiles & Permission Sets",
-    scenario: "Your company has grown from 50 users to 400 users across 6 departments. Currently the org has 20 profiles with inconsistent and overlapping permissions. Users frequently raise access requests that don't match any existing profile. IT spends 3 days per week managing manual permission changes.",
-    question: "How would you redesign the permission model? Explain the difference between Profiles and Permission Sets, how you would reduce the number of profiles, and how Permission Set Groups could streamline the process. Describe your governance approach going forward.",
-    placeholder: "Explain your profile rationalisation plan, permission set design, and governance process..."
+    category: "Data Types & Type Casting",
+    scenario: "A developer writes: Integer x = 10; Integer y = 3; Decimal result = x / y; and expects the result to be 3.33. Instead, result holds 3.0.",
+    question: "Why does this division produce 3.0 instead of 3.33? How does integer division work in Apex? How would you fix the code to get the correct decimal result?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 3,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Data Management",
-    scenario: "Your company is migrating 500,000 legacy CRM records into Salesforce. The legacy data has duplicate accounts, missing required fields, inconsistent phone number formats, and parent-child relationships (Accounts → Contacts → Cases) that must be preserved.",
-    question: "Outline your complete data migration strategy. Include the tools you would use, data cleansing steps before migration, the loading order for related objects, and how you would validate the data after migration.",
-    placeholder: "Describe your migration plan including tools, cleansing, load order, and post-migration validation..."
+    category: "Conditional Statements",
+    scenario: "A method receives a student's score and must return a grade: 90+ = 'A', 70-89 = 'B', 50-69 = 'C', below 50 = 'F'. The developer uses separate if statements instead of if-else if.",
+    question: "What is the problem with using separate if statements for this grade logic? Rewrite the logic using if, else if, and else. Why does the order of conditions matter in a chain like this?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 4,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Process Automation",
-    scenario: "When a new Lead with Lead Source = 'Website' is created: the system must auto-assign it to the 'Website Leads' queue, send a welcome email to the lead, create a follow-up Task for the assigned user due in 2 business days, and post a notification to the Sales Manager's Chatter feed.",
-    question: "Which automation tools would you use for each of these four actions and why? Walk through the complete configuration for each step. Would you use Flow, Workflow Rules, or a combination?",
-    placeholder: "Explain which tool handles each of the 4 actions, and describe the full configuration for each..."
+    category: "Conditional Statements",
+    scenario: "A method checks a picklist field called Status__c and must run different logic for values: 'New', 'Active', 'Closed', and a default action for anything else. The developer has written a long if-else chain.",
+    question: "Rewrite this logic using an Apex switch statement. How is switch different from if-else? What is the 'else' equivalent in a switch statement, and what happens if no case matches and there is no else block?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 5,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Reports & Dashboards",
-    scenario: "The VP of Sales wants an executive dashboard showing: total pipeline value by stage, top 10 reps by closed revenue this quarter, win rate compared to the same quarter last year, and average deal size by product family. The dashboard must refresh every hour and be viewable on mobile.",
-    question: "Describe how you would build this dashboard end to end. Include the report types needed, grouping and summary configurations, chart selections, and how you handle the hourly refresh and mobile access requirements.",
-    placeholder: "Describe report types, configurations, chart choices, refresh settings, and mobile access..."
+    category: "Iterations",
+    scenario: "A developer writes a for loop over a List<Opportunity> and inside the loop executes a SOQL query to fetch related Contacts for each Opportunity. With 150 Opportunities, the code fails in production.",
+    question: "What is the problem with placing a SOQL query inside a loop? What Apex governor limit does this violate? How would you fix this using a single SOQL query outside the loop and a Map to correlate the data?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 6,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Service Cloud",
-    scenario: "A support team handles 800 cases per day via email, web form, and phone. Cases must be auto-routed to specialised queues based on product type. Customers with a Premium SLA must get a response within 2 hours. If a Premium SLA case is not responded to within 1 hour, the case owner's manager must be automatically notified.",
-    question: "Design the complete Service Cloud setup. Cover case assignment rules, queue configuration, Entitlements, Milestones, and Escalation Rules. How would you configure the 1-hour warning for Premium SLA cases?",
-    placeholder: "Describe assignment rules, queues, entitlements, milestones, and escalation configuration..."
+    category: "Iterations",
+    scenario: "A developer needs to remove items from a List<String> while iterating over it using a for-each loop. The code compiles but produces unexpected results — some entries are not removed.",
+    question: "Why is it unsafe to remove items from a collection while iterating it with a for-each loop in Apex? Describe two safe alternatives to handle this correctly.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 7,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Sales Cloud",
-    scenario: "Your sales team sells two different product lines — Enterprise Software and Professional Services — each with different sales stages, required fields at each stage, and different approval requirements. A manager wants a visual indicator showing reps which stage they are on and what is needed to advance.",
-    question: "How would you implement this using Sales Processes, Opportunity Stages, Record Types, Validation Rules, and Path? Explain how each piece fits together and what configuration decisions you would make.",
-    placeholder: "Explain Sales Process, Record Types, Stage configuration, Validation Rules, and Path setup..."
+    category: "Introduction to sObjects",
+    scenario: "A developer creates an Account sObject in Apex, sets the Name and Phone fields, and then tries to read the Id field before inserting the record. The Id field is null and causes a NullPointerException.",
+    question: "Why is the Id field null before a DML insert? What are the default values of common sObject fields (String, Integer, Boolean) before insert? Show a code example of creating, inserting, and reading the Id of an Account.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 8,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Flows",
-    scenario: "Every Monday at 9 AM, the system must find all open Opportunities where the Close Date is more than 60 days old and there has been no activity logged in the last 30 days. For each such Opportunity, update a custom field Status__c to 'Stale' and send an alert email to the Opportunity owner's manager.",
-    question: "Build this logic using a Scheduled Flow. Describe every element you would use — how you filter records, check activity, update the field, and send the email. Why is a Scheduled Flow the right tool rather than a Workflow Rule?",
-    placeholder: "Describe the Scheduled Flow design step by step, including each element and why Scheduled Flow over Workflow..."
+    category: "SOQL",
+    scenario: "A developer writes this code: Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Acme']; The code throws a QueryException in production because sometimes there is no matching record.",
+    question: "What are the two situations that can cause this QueryException? How do you safely query for a single record using LIMIT 1? What is the difference between assigning SOQL results to a single object versus a List?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 9,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Approval Processes",
-    scenario: "Opportunities over $75,000 require a 3-level approval: the rep's direct manager, then the regional VP, then Finance. If any approver rejects the deal, the Opportunity must revert to the previous stage and the rep must be notified. Approvers are frequently out of office and have delegates.",
-    question: "Design the Approval Process for this scenario. Cover entry criteria, approval steps, delegated approvers, actions on approval and rejection, and how you handle the stage reversion on rejection.",
-    placeholder: "Describe entry criteria, approval steps, delegation, and actions on approval/rejection..."
+    category: "SOQL Loops",
+    scenario: "A developer needs to process all Opportunity records in the org where Amount > 10,000. The total record count could be 60,000 — too large to load into a List at once due to heap size limits.",
+    question: "How does a SOQL for loop solve the heap size problem? Explain how it processes records in chunks. Compare the heap usage of assigning SOQL to a List versus using a SOQL for loop.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 10,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Duplicate Management",
-    scenario: "After a trade show, the marketing team imported 8,000 new Lead records. Now the system has thousands of duplicates across Leads and Contacts. Going forward, reps must be warned (but not blocked) when creating a potential duplicate Lead, and must be hard-blocked from creating an exact duplicate based on email address.",
-    question: "Describe how you would use Matching Rules and Duplicate Rules to handle both scenarios — the soft warning for potential duplicates and the hard block for exact email duplicates. How would you also clean up the existing duplicates?",
-    placeholder: "Explain Matching Rules, two separate Duplicate Rules (alert vs block), and the cleanup approach..."
+    category: "SOSL",
+    scenario: "A developer needs to search for a customer name across Account, Contact, and Lead objects simultaneously. They consider writing three separate SOQL queries with LIKE '%name%'.",
+    question: "Why is SOSL a better choice here than three separate SOQL queries? Write a basic SOSL statement that searches across all three objects. What does the result look like in Apex, and when would SOSL be the wrong choice?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 11,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Validation Rules",
-    scenario: "The sales team is entering poor quality data — Opportunities are being created with Close Dates in the past, Contact phone numbers in inconsistent formats, and Accounts missing the Industry field when they are of Type 'Enterprise'. These issues are causing reporting inaccuracies.",
-    question: "Write validation rules to address all three data quality issues. For each rule, explain the formula logic, the error message you would show, and where the error would appear (field-level or page-level). Explain any edge cases to handle.",
-    placeholder: "Write three validation rules with formula logic, error messages, and edge case explanations..."
+    category: "DML With Apex & Bulkification",
+    scenario: "A trigger on Account creates a related Task inside a for loop — one insert per Account. A bulk load of 200 Accounts causes a 'Too many DML statements: 151' error.",
+    question: "Explain the DML statement governor limit. How would you fix this by collecting all Task records in a List and inserting them after the loop? Why is this pattern called bulkification and why is it mandatory in Apex?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 12,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Custom Objects & Relationships",
-    scenario: "A training company needs to track Courses, Batches (multiple batches per course), Student Enrolments (students enrolled in a batch), and Certificates (issued to a student after completing a batch). Each relationship has different requirements for record deletion and rollup reporting.",
-    question: "Design the custom object data model. For each relationship, justify whether you would use a Master-Detail or Lookup relationship, and explain the impact of your choice on record deletion, sharing, and rollup summary fields.",
-    placeholder: "Design the data model with all objects, justify Master-Detail vs Lookup for each relationship..."
+    category: "DML With Apex",
+    scenario: "A developer inserts a List of 10 Lead records using insert leadList. Some records fail due to validation rules and the entire operation rolls back. The requirement is to insert valid records and log failures separately.",
+    question: "What is the difference between insert leadList (all-or-nothing) and Database.insert(leadList, false) with partial success? How do you use Database.SaveResult to check which records failed? Write a simple code example.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 13,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "AppExchange",
-    scenario: "Your admin team wants to install a contract management app from AppExchange. The package requires custom permissions, adds fields to the existing Account and Opportunity objects, and includes its own Flows. You are worried it may conflict with existing Flows and automation already in the org.",
-    question: "Walk through the evaluation and installation process for this managed package. What steps would you take before installation? What would you check for conflicts? How would you configure it post-installation and how would you test it safely?",
-    placeholder: "Describe pre-install evaluation, conflict checks, sandbox testing, and post-install configuration..."
+    category: "Debugging & Logging",
+    scenario: "A developer uses System.debug() throughout a complex Apex class. They are not sure how to view the logs or which log level to use. The debug logs are very long and hard to read.",
+    question: "How do you view debug logs in Salesforce? What log levels are available (ERROR, WARN, INFO, DEBUG, FINE, FINER, FINEST) and when would you use each? What best practices help keep debug logs readable?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 14,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Sandbox & Deployment",
-    scenario: "Your team made 60 configuration changes in a Developer sandbox: new custom fields, updated page layouts, modified validation rules, new Flows, and a new custom object with related objects. You need to deploy these to production during business hours with zero downtime.",
-    question: "Plan the deployment step by step. How do you organise change sets, handle metadata dependencies, determine the correct deployment order, validate before going live, and roll back if something goes wrong?",
-    placeholder: "Describe change set organisation, dependency management, deployment order, validation, and rollback plan..."
+    category: "Exception Handling",
+    scenario: "A developer writes an Apex method that queries a record by Id and updates its fields. Sometimes the record does not exist and a NullPointerException crashes the transaction with no useful error message.",
+    question: "Explain what a NullPointerException is and the most common causes in Apex. Show how to use a try-catch block to handle it gracefully. What information should always be logged inside the catch block?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 15,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Experience Cloud",
-    scenario: "A B2B company wants to build a partner portal where channel partners can: register new deals (create Opportunities), view their own pipeline, submit support cases, and download marketing materials. Partners must only see their own records and the records of their company.",
-    question: "Design the Experience Cloud portal implementation. Cover which template to use, how sharing works for external users, how you would configure deal registration, and any licence considerations for partner users.",
-    placeholder: "Describe template choice, sharing model for external users, deal registration setup, and licence type..."
+    category: "Exception Handling",
+    scenario: "A developer creates a service class that validates Opportunity data. The architect wants the service to throw a custom exception called InvalidOpportunityException instead of returning a Boolean when validation fails.",
+    question: "How do you create a custom Apex exception class? Write the InvalidOpportunityException class, show how to throw it with a message from the service, and catch it in the calling code. What class must a custom exception extend?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 16,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Record Types",
-    scenario: "A healthcare company uses the Account object for two very different types of records: Hospitals and Individual Clinics. Hospitals have different required fields, different picklist values, and a completely different page layout from Clinics. The sales process also differs between the two.",
-    question: "How would you use Record Types to support this? Walk through the configuration steps including how you assign Record Types to profiles, assign different page layouts, and handle the different picklist values for each type.",
-    placeholder: "Explain Record Type creation, page layout assignment per type, picklist value configuration, and profile assignment..."
+    category: "Custom Labels, Settings & Metadata",
+    scenario: "A developer has error messages and discount percentages hardcoded directly in Apex classes. When the business wants to update these values, a full code deployment is required each time.",
+    question: "Compare Custom Labels, Custom Settings, and Custom Metadata Types as solutions to this problem. Which would you use for each type of value (UI message vs configuration number) and why? How do you access each one in Apex?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 17,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Territory Management",
-    scenario: "A company is reorganising its sales territories from geographic regions to industry-based territories. 15,000 Account records need to be reassigned. Sales reps must only see Accounts in their assigned territory. Territory realignments happen every quarter.",
-    question: "Explain how you would configure Enterprise Territory Management for this scenario. Cover territory model setup, rule-based assignment, access model, and how you manage the quarterly realignment process.",
-    placeholder: "Describe territory model, rule-based account assignment, access model, and quarterly realignment process..."
+    category: "Email Services",
+    scenario: "When a new high-priority Case is created, an automatic notification email must be sent to the Support Manager. The developer is unsure whether to use Messaging.SingleEmailMessage or an Email Alert via Flow.",
+    question: "Explain how to send an email from Apex using Messaging.SingleEmailMessage. What are the key fields you must set? What is the governor limit for email sends per transaction, and how do you avoid hitting it when sending to multiple recipients?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 18,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Data Privacy & GDPR",
-    scenario: "Your Salesforce org contains personal data of EU citizens (Contacts and Leads). You must comply with GDPR: individuals have the right to access, correct, and delete their data. Marketing consent must be tracked per channel (email, phone, SMS). Data must be automatically deleted after 3 years of inactivity.",
-    question: "Implement a GDPR compliance approach in Salesforce. Cover Individual records, consent tracking fields, how you would handle Right to Access and Right to Erasure requests, and how you would automate the 3-year data deletion.",
-    placeholder: "Describe Individual records, consent tracking, Right to Access/Erasure handling, and automated deletion..."
+    category: "Apex Triggers — Before vs After",
+    scenario: "A developer needs to set a default value on a field before a Contact record is saved. A colleague suggests using an after insert trigger and performing a second DML update to set the value.",
+    question: "Why is a before insert trigger the better choice for setting a default field value? What is the key difference between before and after triggers in terms of how they modify records and DML usage?",
+    placeholder: "Enter your answer..."
   },
   {
     id: 19,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Forecasting",
-    scenario: "The CFO wants a rolling 90-day revenue forecast broken down by product family, sales rep, and region. The sales team uses both 'Commit' and 'Best Case' forecast categories. Historical forecast accuracy must also be tracked. The CFO wants to see the forecast update in real time as deals change.",
-    question: "Configure Collaborative Forecasting to meet these requirements. How do you set up forecast types, map pipeline stages to forecast categories, enable product family forecasting, and allow the CFO to view forecasts at different hierarchy levels?",
-    placeholder: "Describe forecast type setup, stage-to-category mapping, product family config, and hierarchy view..."
+    category: "Apex Triggers — Context Variables",
+    scenario: "A developer writes a trigger on Contact that fires on both insert and update. On update, they need to compare the old value of the Email field to the new value. The developer uses Trigger.old[0] to get the old record, which fails when multiple records are updated at once.",
+    question: "Explain Trigger.old, Trigger.new, Trigger.oldMap, and Trigger.newMap. Why is Trigger.old[0] dangerous in a bulk context? Write the correct pattern to detect field changes by comparing Trigger.newMap and Trigger.oldMap.",
+    placeholder: "Enter your answer..."
   },
   {
     id: 20,
     part: "Part 1 — Scenario Questions",
     type: "scenario",
-    category: "Einstein & Analytics",
-    scenario: "A sales manager wants to know which of their open Leads are most likely to convert this month. They have heard about Salesforce Einstein and want to use it. They also want a simple dashboard showing the top 10 at-risk Leads that need follow-up.",
-    question: "Explain what Einstein Lead Scoring is and how it works. What data does it use to score Leads? How would you enable and configure it? How would you build the 'Top 10 At-Risk Leads' dashboard component using the Einstein score field?",
-    placeholder: "Explain Einstein Lead Scoring, how to enable and configure it, and how to build the dashboard component..."
+    category: "Apex Triggers — Bulkification & Governor Limits",
+    scenario: "An org has three separate triggers on the Account object written by different developers. When an Account is updated, all three fire in an unpredictable order and one trigger's changes overwrite another's. A Process Builder also runs on Account.",
+    question: "Explain the risks of multiple triggers on the same object. What is the Single Trigger / Trigger Handler pattern and how does it solve this? Where do triggers fit in the Salesforce Order of Execution for a record save?",
+    placeholder: "Enter your answer..."
   },
 
   // ══════════════════════════════════════════════════════════════
@@ -199,59 +200,59 @@ const QUESTIONS = [
     id: 21,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Security — OWD",
-    scenario: "An org has OWD set to Private for the Opportunity object. A Sales Rep owns an Opportunity. The Rep's Manager is directly above them in the Role Hierarchy.",
-    question: "Can the Manager see the Rep's Opportunity without any Sharing Rule?",
+    category: "Data Types",
+    scenario: "A developer needs to store a product price of 29.99 in an Apex variable.",
+    question: "Which data type is most appropriate for storing a decimal monetary value in Apex?",
     options: [
-      "No — OWD Private means no one else can see the record",
-      "Yes — Role Hierarchy grants read/write access upward automatically",
-      "Only if a Manual Share is created by the Rep",
-      "Only if the Manager is also added as an Opportunity Team member"
+      "Integer",
+      "Long",
+      "Decimal",
+      "Boolean"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 22,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Security — Profiles vs Permission Sets",
-    scenario: "An admin needs to give a single user access to a new custom object. All other users on the same Profile should NOT get access.",
-    question: "What is the most appropriate way to grant this access?",
+    category: "Data Types & Type Casting",
+    scenario: "A developer writes: Integer i = (Integer) 9.9;",
+    question: "What is the value of i after this statement executes?",
     options: [
-      "Edit the user's Profile to add object access",
-      "Create a new Profile for just this user",
-      "Assign a Permission Set to the specific user",
-      "Use a Sharing Rule to open access to this user"
+      "10 — it rounds up to the nearest integer",
+      "9 — it truncates the decimal portion",
+      "A TypeException is thrown at runtime",
+      "A compile error is thrown"
     ],
-    answer: 2
+    answer: 1
   },
   {
     id: 23,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Automation — Order of Execution",
-    scenario: "A record is being saved in Salesforce. An admin has both a Validation Rule and an Apex Before Trigger configured on the same object.",
-    question: "In the Salesforce Order of Execution, which fires first?",
+    category: "Conditional Statements",
+    scenario: "An Apex switch statement is written to evaluate a String variable. At runtime the variable's value is null.",
+    question: "How does an Apex switch statement handle a null input value?",
     options: [
-      "Validation Rules fire before Apex Before Triggers",
-      "Apex Before Triggers fire before Validation Rules",
-      "They fire simultaneously",
-      "Workflow Rules fire first, then Triggers, then Validation Rules"
+      "It throws a NullPointerException automatically",
+      "It matches the first when clause regardless of value",
+      "It falls through to the else block if present, otherwise does nothing",
+      "Null causes a compile-time error in switch statements"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 24,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Reports — Report Types",
-    scenario: "A manager wants a report showing all Accounts, and for each Account, all related Contacts — even if some Accounts have no Contacts at all.",
-    question: "Which Report Type should be used?",
+    category: "Iterations",
+    scenario: "A developer uses a for-each loop to iterate a List<Account> and tries to remove records from the list inside the loop body.",
+    question: "What happens when you try to remove an item from a List while iterating it with a for-each loop in Apex?",
     options: [
-      "Tabular Report on Contacts",
-      "Summary Report on Accounts",
-      "Accounts with Contacts (Accounts and Contacts with or without Contacts)",
-      "Matrix Report on Accounts and Contacts"
+      "The item is removed successfully",
+      "A compile error is thrown",
+      "A System.ListException is thrown at runtime",
+      "The loop silently skips the removed item"
     ],
     answer: 2
   },
@@ -259,44 +260,44 @@ const QUESTIONS = [
     id: 25,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Data Management — Data Loader",
-    scenario: "An admin needs to import 200,000 Account records from a CSV file into Salesforce. Some records may fail due to missing required fields and should be logged separately without stopping the entire import.",
-    question: "Which tool is best suited for this operation?",
+    category: "Introduction to sObjects",
+    scenario: "A developer creates a new Account sObject in memory and reads its Id field before inserting it.",
+    question: "What is the value of the Id field on a newly created sObject before a DML insert is performed?",
     options: [
-      "Data Import Wizard",
-      "Data Loader with Insert and separate error log",
-      "Workbench",
-      "SOQL query from Developer Console"
+      "A temporary Id assigned by Apex",
+      "An empty String ''",
+      "null",
+      "000000000000000"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 26,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Flows — Types",
-    scenario: "An admin needs to automatically update a field on an Account record every time a related Contact's email address is changed, without any user interaction.",
-    question: "Which Flow type is most appropriate for this requirement?",
+    category: "SOQL",
+    scenario: "A developer writes: Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Acme']; and there are zero matching records in the org.",
+    question: "What happens when a SOQL query assigned to a single sObject variable returns zero records?",
     options: [
-      "Screen Flow",
-      "Schedule-Triggered Flow",
-      "Record-Triggered Flow",
-      "Platform Event-Triggered Flow"
+      "The variable is set to null",
+      "A QueryException is thrown: 'List has no rows for assignment to SObject'",
+      "An empty Account with null fields is returned",
+      "The code compiles but the Id will be null"
     ],
-    answer: 2
+    answer: 1
   },
   {
     id: 27,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Relationships — Master-Detail vs Lookup",
-    scenario: "An admin is creating a custom object called 'Invoice Line Item' that should always belong to an 'Invoice' record. If the Invoice is deleted, all its Line Items should also be deleted automatically.",
-    question: "Which relationship type should be used between Invoice and Invoice Line Item?",
+    category: "SOQL",
+    scenario: "A developer writes a SOQL query that returns 60,000 Account records assigned directly to a List<Account> in a single transaction.",
+    question: "What happens when a SOQL result assigned to a List exceeds 50,000 rows?",
     options: [
-      "Lookup Relationship",
-      "Master-Detail Relationship",
-      "Many-to-Many Relationship",
-      "Hierarchical Relationship"
+      "Only the first 50,000 records are returned silently",
+      "A QueryException is thrown: 'Too many query rows: 50001'",
+      "The query automatically paginates into the list in chunks",
+      "A heap size error is thrown before the query limit is reached"
     ],
     answer: 1
   },
@@ -304,159 +305,114 @@ const QUESTIONS = [
     id: 28,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Validation Rules",
-    scenario: "An admin wants to prevent an Opportunity from being saved if the Close Date is in the past AND the Stage is NOT 'Closed Won' or 'Closed Lost'.",
-    question: "Which formula correctly implements this validation rule (should return TRUE to show an error)?",
+    category: "SOQL Loops",
+    scenario: "A developer uses a SOQL for loop: for (List<Account> chunk : [SELECT Id FROM Account WHERE ...]) { ... }",
+    question: "How many records does each chunk List contain per iteration by default?",
     options: [
-      "CloseDate < TODAY() && ISPICKVAL(StageName, 'Closed Won')",
-      "CloseDate < TODAY() && NOT(ISPICKVAL(StageName,'Closed Won') || ISPICKVAL(StageName,'Closed Lost'))",
-      "CloseDate < TODAY() || ISPICKVAL(StageName, 'Closed Lost')",
-      "NOT(CloseDate > TODAY()) && StageName = 'Closed Won'"
+      "1 record per iteration",
+      "100 records per iteration",
+      "200 records per iteration",
+      "500 records per iteration"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 29,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Duplicate Management",
-    scenario: "An admin sets up a Duplicate Rule on the Lead object with the Action set to 'Alert'. A rep tries to create a Lead with the same email as an existing Lead.",
-    question: "What happens when the rep clicks Save?",
+    category: "SOSL",
+    scenario: "A developer runs a SOSL query in a test class to search for a Contact they just inserted in the same test. The SOSL returns zero results even though the insert succeeded.",
+    question: "Why does SOSL return no results for newly inserted records in test context?",
     options: [
-      "The record is blocked and cannot be saved",
-      "The record is saved silently without any warning",
-      "The rep sees a warning about the potential duplicate but can still save",
-      "The record is automatically merged with the existing Lead"
+      "SOSL is not supported inside test methods",
+      "Search indexes are not updated during test execution — use Test.setFixedSearchResults()",
+      "The Contact was not committed before the SOSL ran",
+      "SOSL requires a minimum of 10 records to return results"
     ],
-    answer: 2
+    answer: 1
   },
   {
     id: 30,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Sandboxes",
-    scenario: "A developer needs a sandbox environment to build and test a new feature. They need a small subset of production data (up to 10GB) copied in, and the sandbox must be refreshable every 29 days.",
-    question: "Which sandbox type is the best fit?",
+    category: "DML With Apex",
+    scenario: "A developer wants to insert a list of Leads where some might fail validation rules, but valid records should still be saved without rolling back everything.",
+    question: "Which method allows partial success when inserting a list of records?",
     options: [
-      "Developer Sandbox",
-      "Developer Pro Sandbox",
-      "Partial Copy Sandbox",
-      "Full Sandbox"
+      "insert leadList inside a try-catch",
+      "Database.insert(leadList, false) and check SaveResult[]",
+      "Database.insert(leadList, true) and check UpsertResult[]",
+      "Partial inserts are not supported in Apex"
     ],
-    answer: 2
+    answer: 1
   },
   {
     id: 31,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Approval Processes",
-    scenario: "An Opportunity is submitted for approval. The approver is on holiday and has set up a delegated approver. The original approver's manager also needs to be able to approve.",
-    question: "Which Approval Process setting allows both the delegated approver AND the manager to approve?",
+    category: "DML With Apex",
+    scenario: "A developer needs to either insert a Contact if it does not exist, or update it if it does, using Email as the unique match key. Email is set as an External Id field.",
+    question: "Which DML operation handles both insert and update in a single statement?",
     options: [
-      "Approve based on Queue membership",
-      "Allow approvals from related users only",
-      "Enable 'Allow Approvers to Reassign'",
-      "Configure the step to allow the approver's delegate and manager to approve"
+      "merge",
+      "update",
+      "upsert",
+      "insert or update (not a real operation)"
     ],
-    answer: 3
+    answer: 2
   },
   {
     id: 32,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Service Cloud — Entitlements",
-    scenario: "A support team has Premium customers who must get a first response within 2 hours and resolution within 8 hours. Standard customers have 24-hour response and 72-hour resolution. These SLAs must be enforced automatically on Cases.",
-    question: "Which Salesforce features enforce time-based SLAs on Cases?",
+    category: "Debugging & Logging",
+    scenario: "A developer wants to print the value of a variable called totalAmount to the debug log.",
+    question: "Which statement correctly logs the value of totalAmount in Apex?",
     options: [
-      "Case Assignment Rules and Escalation Rules",
-      "Entitlements and Milestones",
-      "Workflow Rules with Time-Based Actions",
-      "Case Teams and Queues"
+      "console.log('Total: ' + totalAmount);",
+      "Debug.print('Total: ' + totalAmount);",
+      "System.debug('Total: ' + totalAmount);",
+      "Apex.log('Total: ' + totalAmount);"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 33,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Dashboards — Running User",
-    scenario: "A dashboard must always show data from the perspective of a specific executive user, regardless of which user is actually viewing the dashboard.",
-    question: "Which dashboard running user setting achieves this?",
+    category: "Exception Handling",
+    scenario: "A developer writes a SOQL query inside a try block that might return no results. They want to catch only query-related exceptions.",
+    question: "Which exception type should be caught for a failed SOQL assignment that returns zero or multiple rows?",
     options: [
-      "Run as Logged-in User",
-      "Run as Specified User (a fixed named user)",
-      "Dynamic Dashboard (run as viewer)",
-      "Run as Dashboard Owner"
+      "NullPointerException",
+      "DmlException",
+      "QueryException",
+      "TypeException"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 34,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Data Import — External IDs",
-    scenario: "An admin is loading Account records from an external system. They want to prevent duplicates during the load and be able to easily update the same records in future loads, using a unique ID from the external system.",
-    question: "What is the correct approach?",
+    category: "Custom Labels",
+    scenario: "A developer needs to access a Custom Label called Welcome_Message in an Apex class.",
+    question: "Which syntax correctly retrieves a Custom Label value in Apex?",
     options: [
-      "Use the Salesforce Record Id as the match key",
-      "Create a custom field marked as External ID and use it as the upsert key in Data Loader",
-      "Use the Account Name as the unique match field",
-      "Load all records as new inserts and clean up duplicates afterward"
+      "CustomLabel.Welcome_Message",
+      "Label.get('Welcome_Message')",
+      "System.Label.Welcome_Message",
+      "$Label.Welcome_Message"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 35,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Experience Cloud — Licences",
-    scenario: "A company wants to give 500 external partner users access to a Salesforce Experience Cloud portal to manage their deals and view reports.",
-    question: "Which licence type is designed for external partner users accessing Experience Cloud?",
-    options: [
-      "Salesforce Platform Licence",
-      "Customer Community Licence",
-      "Partner Community Licence",
-      "Chatter External Licence"
-    ],
-    answer: 2
-  },
-  {
-    id: 36,
-    part: "Part 2 — Multiple Choice Questions",
-    type: "mcq",
-    category: "Forecasting",
-    scenario: "A sales rep updates an Opportunity's Amount from $50,000 to $80,000. The Opportunity has a Stage of 'Proposal' which is mapped to the 'Pipeline' forecast category.",
-    question: "How does this change affect the rep's forecast immediately?",
-    options: [
-      "It has no effect until the manager approves the forecast",
-      "The Pipeline forecast for the rep increases by $30,000 automatically",
-      "The forecast only updates when the rep manually refreshes it",
-      "The change only reflects in the next quarter's forecast"
-    ],
-    answer: 1
-  },
-  {
-    id: 37,
-    part: "Part 2 — Multiple Choice Questions",
-    type: "mcq",
-    category: "Record Types",
-    scenario: "An admin has two Record Types on the Case object: 'Technical Support' and 'Billing Support'. The 'Priority' picklist has different values available for each Record Type.",
-    question: "Where does the admin configure which picklist values are available for each Record Type?",
-    options: [
-      "In the Picklist field definition in Object Manager",
-      "In the Page Layout assigned to the Record Type",
-      "In the Record Type configuration under Available Picklist Values",
-      "In the Profile settings for each user"
-    ],
-    answer: 2
-  },
-  {
-    id: 38,
-    part: "Part 2 — Multiple Choice Questions",
-    type: "mcq",
     category: "Custom Metadata vs Custom Settings",
-    scenario: "An admin needs to store a set of configuration values (tax rates by country) that must be deployable between sandboxes via Change Sets, should survive sandbox refreshes, and must be queryable in Flows and Apex.",
-    question: "Which Salesforce feature is the best fit?",
+    scenario: "A developer stores configuration values that must survive sandbox refreshes, be deployable via Change Sets, and be queryable in Apex. Per-user values are not required.",
+    question: "Which Salesforce feature best meets all these requirements?",
     options: [
       "Custom Settings — Hierarchy type",
       "Custom Settings — List type",
@@ -466,100 +422,144 @@ const QUESTIONS = [
     answer: 2
   },
   {
+    id: 36,
+    part: "Part 2 — Multiple Choice Questions",
+    type: "mcq",
+    category: "Email Services",
+    scenario: "A developer calls Messaging.sendEmail() inside a for loop that iterates 15 times, sending one email per iteration.",
+    question: "What is the maximum number of Messaging.sendEmail() calls allowed per Apex transaction?",
+    options: [
+      "10",
+      "50",
+      "100",
+      "Unlimited — only the number of recipients is limited"
+    ],
+    answer: 0
+  },
+  {
+    id: 37,
+    part: "Part 2 — Multiple Choice Questions",
+    type: "mcq",
+    category: "Apex Triggers — Context Variables",
+    scenario: "A trigger on Contact is written for the delete event. The developer uses Trigger.new inside the trigger body.",
+    question: "What is the value of Trigger.new in a delete trigger?",
+    options: [
+      "It contains the records being deleted with their current field values",
+      "It contains the records as they will appear after deletion",
+      "It is null — only Trigger.old is populated on a delete trigger",
+      "It contains an empty list"
+    ],
+    answer: 2
+  },
+  {
+    id: 38,
+    part: "Part 2 — Multiple Choice Questions",
+    type: "mcq",
+    category: "Apex Triggers — Before vs After",
+    scenario: "A developer needs to automatically set a default field value before a Contact record is saved, without issuing an additional DML update.",
+    question: "Which trigger event handles this most efficiently?",
+    options: [
+      "after insert — to read the Id after save and then update",
+      "before insert — fields on Trigger.new can be modified directly before save",
+      "after update — to check the value after the initial save",
+      "before delete — to preserve values before removal"
+    ],
+    answer: 1
+  },
+  {
     id: 39,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Flows — Get Records",
-    scenario: "A Flow needs to look up whether an Account with a specific Name already exists in the system. If it exists, update it; if not, create a new one.",
-    question: "Which combination of Flow elements handles this logic correctly?",
+    category: "Apex Triggers — Bulkification",
+    scenario: "A trigger on Opportunity is invoked by Data Loader uploading 1,000 records at once.",
+    question: "In how many batches does Salesforce invoke the trigger for 1,000 records?",
     options: [
-      "Create Records → Assignment → Update Records",
-      "Get Records → Decision → Create Records or Update Records",
-      "Loop → Assignment → Create Records",
-      "Subflow → Get Records → Update Records"
+      "1 invocation for all 1,000 records at once",
+      "1,000 separate invocations — one per record",
+      "5 invocations of 200 records each",
+      "10 invocations of 100 records each"
     ],
-    answer: 1
+    answer: 2
   },
   {
     id: 40,
     part: "Part 2 — Multiple Choice Questions",
     type: "mcq",
-    category: "Automation — Scheduled Flow",
-    scenario: "An admin wants to send a reminder email to the owner of every open Opportunity where no activity has been logged in the last 14 days. This should happen every morning at 8 AM automatically.",
-    question: "Which is the correct Salesforce tool for this time-based automation that requires querying and processing multiple records?",
+    category: "Governor Limits",
+    scenario: "A developer writes a SOQL query inside a for loop. The loop iterates 150 times.",
+    question: "Which governor limit does this pattern violate?",
     options: [
-      "Workflow Rule with Time-Based Action",
-      "Process Builder with Scheduled Action",
-      "Scheduled-Triggered Flow",
-      "Approval Process with Reminder"
+      "Maximum heap size of 6 MB",
+      "Maximum CPU time of 10,000 ms",
+      "Maximum 100 SOQL queries per transaction",
+      "Maximum 150 DML statements per transaction"
     ],
     answer: 2
   },
 
   // ══════════════════════════════════════════════════════════════
-  //  PART 3 — LIVE CODING  (Q41 – Q45)
+  //  PART 3 — LIVE CODING — TRIGGERS  (Q41 – Q45)
   // ══════════════════════════════════════════════════════════════
 
   {
     id: 41,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "SOQL — Basic Query",
-    language: "SOQL / Apex",
-    file: "solution.cls",
-    scenario: "Your manager needs a list of all Accounts in the 'Technology' industry where AnnualRevenue is greater than $500,000. The results should show Account Name, Industry, Annual Revenue, and Phone. Order the results by AnnualRevenue from highest to lowest and limit to 10 records.",
-    question: "Write the Apex method getTopTechAccounts() that queries and returns these Account records.",
-    placeholder: "public static List<Account> getTopTechAccounts() {\n    // Write your SOQL query here\n    return [\n        SELECT ...\n        FROM Account\n        WHERE ...\n    ];\n}",
-    hint: "Use: SELECT Id, Name, Industry, AnnualRevenue, Phone FROM Account WHERE Industry = \'Technology\' AND AnnualRevenue > 500000 ORDER BY AnnualRevenue DESC LIMIT 10"
+    category: "Trigger — Before Insert",
+    language: "Apex",
+    file: "ContactTrigger.cls",
+    scenario: "When a new Contact record is created, if the Description field is blank or null, it should automatically be set to 'New Contact - Needs Review' before the record is saved. This must work even if 200 Contacts are inserted at the same time.",
+    question: "Write a before insert Apex trigger on the Contact object named ContactDefaultsTrigger that sets the default Description.",
+    placeholder: "trigger ContactDefaultsTrigger on Contact (before insert) {\n    for (Contact con : Trigger.new) {\n        // Write your logic here\n\n    }\n}",
+    hint: "Use String.isBlank(con.Description) to check if the field is empty. If true, set con.Description = 'New Contact - Needs Review'. No DML statement is needed — before triggers modify Trigger.new records directly before save."
   },
   {
     id: 42,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "Apex — DML & sObjects",
+    category: "Trigger — After Insert (Bulkified)",
     language: "Apex",
-    file: "solution.cls",
-    scenario: "A new business requirement asks that when a lead is marked as 'Converted', a follow-up Task is automatically created and assigned to the Lead Owner. The Task Subject should be 'Post-conversion follow-up', due date should be 7 days from today, and Status should be 'Not Started'.",
-    question: "Write an Apex method createFollowUpTask(Lead convertedLead) that creates and inserts this Task record.",
-    placeholder: "public static void createFollowUpTask(Lead convertedLead) {\n    // Build the Task sObject\n    Task t = new Task();\n    // Set the required fields here\n    \n    // Insert the Task\n}",
-    hint: "Set: t.Subject = 'Post-conversion follow-up'; t.OwnerId = convertedLead.OwnerId; t.WhoId = convertedLead.Id; t.ActivityDate = Date.today() + 7; t.Status = 'Not Started'; Then call insert t;"
+    file: "AccountTrigger.cls",
+    scenario: "Whenever a new Account is created, a follow-up Task must be automatically created for that Account. The Task should have Subject = 'Follow up with new Account', Status = 'Not Started', and Due Date = today + 7 days. The trigger must handle bulk inserts without hitting governor limits.",
+    question: "Write a bulkified after insert trigger on the Account object named AccountTaskTrigger. Collect all Task records in a List and insert them with a single DML statement outside the loop.",
+    placeholder: "trigger AccountTaskTrigger on Account (after insert) {\n    List<Task> taskList = new List<Task>();\n\n    for (Account acc : Trigger.new) {\n        // Build the Task record here\n\n    }\n\n    if (!taskList.isEmpty()) {\n        insert taskList;\n    }\n}",
+    hint: "Inside the loop: Task t = new Task(); Set t.WhatId = acc.Id; t.Subject = 'Follow up with new Account'; t.Status = 'Not Started'; t.ActivityDate = Date.today() + 7; then taskList.add(t); Insert is done after the loop — never inside."
   },
   {
     id: 43,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "Apex Trigger — Before Insert",
+    category: "Trigger — After Update (Field Change Detection)",
     language: "Apex",
-    file: "AccountTrigger.cls",
-    scenario: "Your company has a rule: every new Account created must have the Rating field set to 'Warm' by default if the user leaves it blank. This must happen automatically before the record is saved, without requiring an extra DML update.",
-    question: "Write a before insert Apex trigger on Account called AccountDefaultsTrigger that sets Rating to 'Warm' for any Account where Rating is null or blank.",
-    placeholder: "trigger AccountDefaultsTrigger on Account (before insert) {\n    for (Account acc : Trigger.new) {\n        // Check and set the default Rating here\n        \n    }\n}",
-    hint: "Check if String.isBlank(acc.Rating) or acc.Rating == null. If true, set acc.Rating = \'Warm\'. No DML needed — before triggers modify Trigger.new records directly before they are saved."
+    file: "OpportunityTrigger.cls",
+    scenario: "When an Opportunity's Stage is changed to 'Closed Won', a custom field Won_Date__c (Date) should automatically be set to today's date. If the Stage changes to anything else, Won_Date__c should be cleared. The trigger must compare old and new Stage values to detect the change.",
+    question: "Write an after update trigger on Opportunity named OpportunityWonDateTrigger. Use Trigger.oldMap to detect the stage change and update the Won_Date__c field.",
+    placeholder: "trigger OpportunityWonDateTrigger on Opportunity (after update) {\n    List<Opportunity> oppToUpdate = new List<Opportunity>();\n\n    for (Opportunity opp : Trigger.new) {\n        Opportunity oldOpp = Trigger.oldMap.get(opp.Id);\n\n        // Detect stage change and set Won_Date__c\n\n    }\n\n    if (!oppToUpdate.isEmpty()) {\n        update oppToUpdate;\n    }\n}",
+    hint: "Compare opp.StageName != oldOpp.StageName to confirm the stage changed. If the new stage is 'Closed Won', create new Opportunity(Id = opp.Id, Won_Date__c = Date.today()) and add to the list. If stage changed to anything else, set Won_Date__c = null. Update after the loop."
   },
   {
     id: 44,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "Apex — Collections & Logic",
+    category: "Trigger — Before Delete (Validation)",
     language: "Apex",
-    file: "solution.cls",
-    scenario: "A reporting utility needs a method that takes a List of Opportunity records and returns a Map where the key is the StageName and the value is the total Amount for all Opportunities in that stage. For example: {'Prospecting' => 50000, 'Proposal' => 120000}.",
-    question: "Write an Apex method groupAmountByStage(List<Opportunity> opps) that builds and returns this Map<String, Decimal>.",
-    placeholder: "public static Map<String, Decimal> groupAmountByStage(List<Opportunity> opps) {\n    Map<String, Decimal> stageMap = new Map<String, Decimal>();\n    \n    for (Opportunity opp : opps) {\n        // Build the map here\n        \n    }\n    \n    return stageMap;\n}",
-    hint: "Inside the loop: check if stageMap.containsKey(opp.StageName). If yes, add to existing value: stageMap.put(opp.StageName, stageMap.get(opp.StageName) + (opp.Amount ?? 0)). If no, put a new entry."
+    file: "AccountTrigger.cls",
+    scenario: "The business has a rule that Customer accounts should never be deleted. If a user attempts to delete an Account where Type = 'Customer', the deletion must be blocked with the error message: 'Customer accounts cannot be deleted.'",
+    question: "Write a before delete trigger on the Account object named AccountDeleteProtectionTrigger that blocks deletion of Customer type accounts using the addError() method.",
+    placeholder: "trigger AccountDeleteProtectionTrigger on Account (before delete) {\n    for (Account acc : Trigger.old) {\n        // Add your validation logic here\n\n    }\n}",
+    hint: "In a before delete trigger, use Trigger.old to access the records being deleted. Check if acc.Type == 'Customer'. If true, call acc.addError('Customer accounts cannot be deleted.') — this blocks the delete and shows the message."
   },
   {
     id: 45,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "Apex — Exception Handling",
+    category: "Trigger — Count Rollup (Bulkified)",
     language: "Apex",
-    file: "solution.cls",
-    scenario: "A service method queries a Case record by Id and updates its Status to 'Closed'. If the Id is invalid or the record does not exist, the method should not throw an unhandled exception — instead it should return false. If the update is successful, return true.",
-    question: "Write an Apex method closeCase(Id caseId) that safely queries and updates the Case, returning true on success and false on any failure.",
-    placeholder: "public static Boolean closeCase(Id caseId) {\n    try {\n        // Query the Case by caseId\n        \n        // Update its Status to 'Closed'\n        \n        return true;\n    } catch (Exception e) {\n        System.debug('Error closing case: ' + e.getMessage());\n        return false;\n    }\n}",
-    hint: "Inside try: Case c = [SELECT Id, Status FROM Case WHERE Id = :caseId LIMIT 1]; c.Status = \'Closed\'; update c; return true; The catch block catches QueryException (no record) and DmlException (update fails)."
+    file: "CaseTrigger.cls",
+    scenario: "Whenever a Case is inserted, updated, or deleted, the related Account's custom field Total_Cases__c (Number) must be updated with the current total count of all Cases linked to that Account. The solution must use only one SOQL query and one DML statement regardless of how many Cases are processed.",
+    question: "Write the trigger CaseCountTrigger and a handler class CaseCountHandler with a static method updateCaseCount(Set<Id> accountIds) that recalculates and updates the count.",
+    placeholder: "trigger CaseCountTrigger on Case (after insert, after update, after delete) {\n    Set<Id> accountIds = new Set<Id>();\n\n    for (Case c : (Trigger.isDelete ? Trigger.old : Trigger.new)) {\n        if (c.AccountId != null) {\n            accountIds.add(c.AccountId);\n        }\n    }\n\n    CaseCountHandler.updateCaseCount(accountIds);\n}\n\npublic class CaseCountHandler {\n    public static void updateCaseCount(Set<Id> accountIds) {\n        // Step 1: Use aggregate SOQL to count Cases per Account\n        // Step 2: Build a Map of AccountId => Case Count\n        // Step 3: Update Account records with the new Total_Cases__c value\n\n    }\n}",
+    hint: "Use: SELECT AccountId, COUNT(Id) cnt FROM Case WHERE AccountId IN :accountIds GROUP BY AccountId — returns AggregateResult records. Loop: Id accId = (Id)ar.get('AccountId'); Integer cnt = (Integer)ar.get('cnt'); Build Account records with Total_Cases__c, then update in one DML call."
   }
-
 
 ];
