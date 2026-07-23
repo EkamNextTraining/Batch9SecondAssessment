@@ -509,77 +509,111 @@ async function sendToSheets(timeStr, mcqScore, scenAnswered, codeAnswered, wasAu
   const line2 = document.getElementById("submitLine2");
   const line3 = document.getElementById("submitLine3");
 
-  // Scenario columns
+  // ── Build payload ─────────────────────────────────────────────────
   const scenarioCols = {};
   for (let i = SCENARIO_START; i < SCENARIO_END; i++) {
     const q = QUESTIONS[i];
-    const p = `Q${String(i+1).padStart(2,"0")}_Scenario`;
-    scenarioCols[`${p}_Category`] = q.category;
-    scenarioCols[`${p}_Scenario`] = q.scenario;
-    scenarioCols[`${p}_Question`] = q.question;
-    scenarioCols[`${p}_Answer`]   = answers[i] || "(No answer)";
+    const p = `Q${String(i+1).padStart(2,"00")}_Scenario_`;
+    scenarioCols[p+"Category"] = q.category;
+    scenarioCols[p+"Scenario"] = q.scenario;
+    scenarioCols[p+"Question"] = q.question;
+    scenarioCols[p+"Answer"]   = (answers[i] || "(No answer)");
   }
-
-  // MCQ columns
   const mcqCols = {};
   for (let i = MCQ_START; i < MCQ_END; i++) {
     const q   = QUESTIONS[i];
     const num = i - MCQ_START + 1;
-    const p   = `Q${String(num).padStart(2,"0")}_MCQ`;
+    const p   = `Q${String(num).padStart(2,"00")}_MCQ_`;
     const si  = answers[i];
-    mcqCols[`${p}_Category`] = q.category;
-    mcqCols[`${p}_Question`] = q.question;
-    mcqCols[`${p}_Selected`] = si !== undefined ? `${["A","B","C","D"][si]}. ${q.options[si]}` : "Not answered";
-    mcqCols[`${p}_Correct`]  = `${["A","B","C","D"][q.answer]}. ${q.options[q.answer]}`;
-    mcqCols[`${p}_Result`]   = si === q.answer ? "✓ Correct" : "✗ Wrong";
+    mcqCols[p+"Category"] = q.category;
+    mcqCols[p+"Question"] = q.question;
+    mcqCols[p+"Selected"] = si !== undefined ? `${["A","B","C","D"][si]}. ${q.options[si]}` : "Not answered";
+    mcqCols[p+"Correct"]  = `${["A","B","C","D"][q.answer]}. ${q.options[q.answer]}`;
+    mcqCols[p+"Result"]   = si === q.answer ? "Correct" : "Wrong";
   }
-
-  // Coding columns
   const codingCols = {};
   for (let i = CODING_START; i < CODING_END; i++) {
     const q   = QUESTIONS[i];
     const num = i - CODING_START + 1;
-    const p   = `Q${String(num).padStart(2,"0")}_Coding`;
-    codingCols[`${p}_Category`]    = q.category;
-    codingCols[`${p}_Language`]    = q.language || "Apex";
-    codingCols[`${p}_Requirement`] = q.scenario;
-    codingCols[`${p}_Question`]    = q.question;
-    codingCols[`${p}_Code`]        = answers[i] || "(No answer)";
+    const p   = `Q${String(num).padStart(2,"00")}_Coding_`;
+    codingCols[p+"Category"]    = q.category;
+    codingCols[p+"Language"]    = q.language || "Apex";
+    codingCols[p+"Requirement"] = q.scenario;
+    codingCols[p+"Question"]    = q.question;
+    codingCols[p+"Code"]        = (answers[i] || "(No answer)");
   }
 
   const payload = {
-    timestamp:         new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-    name:              candidateInfo.name,
-    email:             candidateInfo.email,
-    batch:             candidateInfo.batch,
-    role:              candidateInfo.role,
-    mcq_score:         `${mcqScore} / 20`,
-    scenario_answered: `${scenAnswered} / 20`,
-    coding_answered:   `${codeAnswered} / 5`,
-    time_taken:        timeStr,
-    tab_violations:    String(violationCount),
-    submit_type:       wasAuto ? "Auto-submitted" : "Manual",
+    timestamp:          new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+    name:               candidateInfo.name  || "",
+    email:              candidateInfo.email || "",
+    batch:              candidateInfo.batch || "",
+    role:               candidateInfo.role  || "",
+    mcq_score:          `${mcqScore} / 20`,
+    scenario_answered:  `${scenAnswered} / 20`,
+    coding_answered:    `${codeAnswered} / 5`,
+    time_taken:         timeStr,
+    tab_violations:     String(violationCount),
+    submit_type:        wasAuto ? "Auto-submitted" : "Manual",
     ...scenarioCols,
     ...mcqCols,
     ...codingCols
   };
 
+  // ── Demo mode guard ───────────────────────────────────────────────
   if (!SCRIPT_URL || SCRIPT_URL.includes("YOUR_GOOGLE")) {
-    line2.innerHTML = `Sending to Google Sheets... <span class="sub-ok">[DEMO MODE — set SCRIPT_URL in quiz.js]</span>`;
+    line2.innerHTML = `Sending to Google Sheets... <span class="sub-warn">⚠️ SCRIPT_URL not set in quiz.js — responses not saved.</span>`;
+    line3.style.display = "block";
+    line3.innerHTML = `<span class="sub-warn">Open quiz.js, find line 7, and replace YOUR_GOOGLE_APPS_SCRIPT_URL_HERE with your Apps Script Web App URL.</span>`;
     return;
   }
 
+  // ── Submit via fetch ──────────────────────────────────────────────
+  // Google Apps Script does not support true CORS preflight, so we use
+  // a form-encoded POST via a hidden form trick which avoids CORS entirely.
+  line2.innerHTML = `Sending to Google Sheets... <span class="sub-spin">●</span>`;
+
   try {
-    await fetch(SCRIPT_URL, {
-      method:"POST", mode:"no-cors",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
+    // Encode as URL-encoded form body — Apps Script accepts this without CORS issues
+    const formBody = "data=" + encodeURIComponent(JSON.stringify(payload));
+
+    const resp = await fetch(SCRIPT_URL, {
+      method:   "POST",
+      redirect: "follow",
+      headers:  { "Content-Type": "application/x-www-form-urlencoded" },
+      body:     formBody
     });
-    line2.innerHTML = `Sending to Google Sheets... <span class="sub-ok">[OK]</span>`;
-    line3.style.display = "block";
-    line3.innerHTML = `<span class="sub-ok">All 45 responses saved to Google Sheets.</span>`;
+
+    // Apps Script returns 200 even via redirect; any response means it reached the script
+    if (resp.ok || resp.status === 0 || resp.redirected) {
+      let respText = "";
+      try { respText = await resp.text(); } catch(e) {}
+      if (respText.includes("error")) {
+        throw new Error("Script returned error: " + respText);
+      }
+      line2.innerHTML = `Sending to Google Sheets... <span class="sub-ok">✓ Saved successfully</span>`;
+      line3.style.display = "block";
+      line3.innerHTML = `<span class="sub-ok">All 45 responses written to Google Sheets.</span>`;
+    } else {
+      throw new Error(`HTTP ${resp.status} — ${resp.statusText}`);
+    }
   } catch(err) {
-    line2.innerHTML = `Sending to Google Sheets... <span class="sub-err">[FAILED — ${err.message}]</span>`;
+    // Fallback: try no-cors as last resort (silent but often works for Apps Script)
+    try {
+      await fetch(SCRIPT_URL, {
+        method:  "POST",
+        mode:    "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:    "data=" + encodeURIComponent(JSON.stringify(payload))
+      });
+      line2.innerHTML = `Sending to Google Sheets... <span class="sub-ok">✓ Submitted (no-cors fallback)</span>`;
+      line3.style.display = "block";
+      line3.innerHTML = `<span class="sub-ok">Check your Google Sheet to confirm the row was added.</span>`;
+    } catch(err2) {
+      line2.innerHTML = `Sending to Google Sheets... <span class="sub-err">✗ Failed</span>`;
+      line3.style.display = "block";
+      line3.innerHTML = `<span class="sub-err">Error: ${err2.message}. Check SCRIPT_URL and re-deploy your Apps Script.</span>`;
+    }
   }
 }
 
