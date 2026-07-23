@@ -398,3 +398,5 @@ body {
 }
 .hint-text       { font-size: .72rem; color: #8b949e; font-style: italic; }
 .code-char-count { font-size: .7rem; color: #484f58; font-family: 'JetBrains Mono', monospace; }
+
+.sub-warn { color: #d97706; font-weight: 600; }
