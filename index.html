@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salesforce Live Coding Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════ ANTI-CHEAT OVERLAY ═══════════════════════ -->
+<div id="warningOverlay" class="warning-overlay" style="display:none;">
+  <div class="warning-box">
+    <div class="warning-icon">⚠️</div>
+    <h2>Focus Violation Detected</h2>
+    <p id="warningMsg">You switched away from this window.</p>
+    <div class="warning-count" id="warningCount">Warning 1 of 3</div>
+    <button class="btn-return" onclick="dismissWarning()">Return to Assessment</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ LANDING SCREEN ═══════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <div class="landing-card">
+
+    <div class="landing-header">
+      <div class="landing-logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">Live Coding Assessment</span>
+      </div>
+      <p class="landing-subtitle">Salesforce Apex Developer Evaluation</p>
+      <div class="landing-meta">
+        <span class="meta-pill">60 Minutes</span>
+        <span class="meta-pill">5 Coding Questions</span>
+        <span class="meta-pill">Apex / SOQL / LWC</span>
+      </div>
+    </div>
+
+    <div class="rules-strip">
+      <div class="rule-item">
+        <span class="rule-icon">🔒</span>
+        <span>No tab switching — violations auto-submit</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">⏱️</span>
+        <span>60-minute timer starts on Begin</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">💾</span>
+        <span>Code auto-saved as you type</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">📊</span>
+        <span>Responses saved to Google Sheets</span>
+      </div>
+    </div>
+
+    <div class="landing-form">
+      <p class="form-title">Candidate Registration</p>
+
+      <div class="field-group">
+        <label for="inName">Full Name</label>
+        <input type="text" id="inName" placeholder="Enter your full name" autocomplete="name"/>
+      </div>
+      <div class="field-group">
+        <label for="inEmail">Email Address</label>
+        <input type="email" id="inEmail" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="field-group">
+        <label for="inBatch">Batch ID</label>
+        <input type="text" id="inBatch" placeholder="e.g. SF-2025-A"/>
+      </div>
+      <div class="field-group">
+        <label for="inRole">Role</label>
+        <select id="inRole">
+          <option value="">— Select your role —</option>
+          <option>Salesforce Developer</option>
+          <option>Salesforce Admin</option>
+          <option>Salesforce Consultant</option>
+          <option>Student / Fresher</option>
+        </select>
+      </div>
+
+      <div class="consent-box">
+        <label class="consent-label">
+          <input type="checkbox" id="consentCheck"/>
+          <span>I understand that tab/window switching is monitored. Three violations will auto-submit my assessment.</span>
+        </label>
+      </div>
+
+      <button class="btn-launch" onclick="startQuiz()">Begin Assessment</button>
+      <p class="err-msg" id="errMsg"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUIZ SCREEN ══════════════════════════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">⚡</div>
+        <div>
+          <div class="sidebar-brand-text">Live Coding</div>
+          <div class="sidebar-brand-sub">Apex Assessment</div>
+        </div>
+      </div>
+
+      <div class="info-chip">
+        <span class="chip-label">Candidate</span>
+        <span class="chip-val" id="sidebarName">—</span>
+      </div>
+      <div class="info-chip">
+        <span class="chip-label">Batch</span>
+        <span class="chip-val" id="sidebarBatch">—</span>
+      </div>
+      <div class="info-chip timer-chip">
+        <span class="chip-label">Time Remaining</span>
+        <span class="chip-val timer-val" id="sidebarTimer">60:00</span>
+      </div>
+
+      <div class="q-map-label">Questions</div>
+      <div class="q-map" id="qMap"></div>
+
+      <div class="legend">
+        <div class="leg-item"><span class="leg-dot leg-answered"></span>Answered</div>
+        <div class="leg-item"><span class="leg-dot leg-current"></span>Current</div>
+        <div class="leg-item"><span class="leg-dot leg-blank"></span>Unanswered</div>
+      </div>
+
+      <div class="violation-panel" id="violationPanel">
+        <span class="vp-label">Tab Violations</span>
+        <div class="vp-dots" id="vpDots">
+          <span class="vp-dot" id="vd0"></span>
+          <span class="vp-dot" id="vd1"></span>
+          <span class="vp-dot" id="vd2"></span>
+        </div>
+      </div>
+
+      <button class="btn-final-submit" onclick="finalSubmit()">Submit Assessment</button>
+    </aside>
+
+    <!-- MAIN PANEL -->
+    <main class="quiz-main">
+      <div class="qcard" id="qcard">
+
+        <div class="qcard-top">
+          <div class="q-meta-left">
+            <span class="q-type-badge" id="qTypeBadge">Apex</span>
+            <span class="q-num" id="qNum">Q1 / 5</span>
+          </div>
+          <div class="q-category-tag" id="qCatTag">Category</div>
+        </div>
+
+        <div class="requirement-box" id="requirementBox">
+          <div class="req-header">
+            <span class="req-icon">📋</span>
+            <span class="req-label">REQUIREMENT</span>
+          </div>
+          <p class="req-text" id="reqText"></p>
+        </div>
+
+        <h2 class="q-text" id="qText"></h2>
+
+        <div class="code-editor-wrap">
+          <div class="code-editor-bar">
+            <div class="editor-bar-left">
+              <span class="editor-file" id="editorFile">solution.cls</span>
+              <span class="lang-tag" id="editorLang">Apex</span>
+            </div>
+            <div class="editor-bar-right">
+              <span class="autosave-indicator" id="autosaveIndicator">● Auto-saved</span>
+              <button class="btn-clear-code" onclick="clearCode()">Clear</button>
+            </div>
+          </div>
+          <div class="editor-container">
+            <div class="line-numbers" id="lineNumbers">1</div>
+            <textarea class="code-area" id="codeArea"
+              spellcheck="false"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              oninput="onCodeInput()"
+              onkeydown="handleTab(event)"
+              placeholder="// Write your Apex code here..."></textarea>
+          </div>
+          <div class="editor-footer">
+            <span class="hint-text" id="hintText"></span>
+            <span class="char-count" id="charCount">0 chars</span>
+          </div>
+        </div>
+
+        <div class="qcard-nav">
+          <button class="btn-qnav btn-prev" id="btnPrev" onclick="goTo(currentIdx - 1)">← Previous</button>
+          <span class="q-progress-text" id="qProgressText">0 of 5 answered</span>
+          <button class="btn-qnav btn-next" id="btnNext" onclick="goTo(currentIdx + 1)">Next →</button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════ RESULT SCREEN ════════════════════════════ -->
+<div id="screen-result" class="screen">
+  <div class="result-card">
+
+    <div class="result-header">
+      <div class="result-header-title">Assessment Complete</div>
+      <div class="result-header-sub">Salesforce Live Coding Evaluation</div>
+    </div>
+
+    <div class="result-status-banner" id="resultBanner">
+      ✓ Assessment Submitted Successfully
+    </div>
+
+    <div class="result-body">
+      <div class="result-grid">
+        <div class="res-stat">
+          <span class="rs-label">Candidate</span>
+          <span class="rs-val" id="rName">—</span>
+        </div>
+        <div class="res-stat">
+          <span class="rs-label">Batch</span>
+          <span class="rs-val" id="rBatch">—</span>
+        </div>
+        <div class="res-stat">
+          <span class="rs-label">Questions Answered</span>
+          <span class="rs-val" id="rAnswered">—</span>
+        </div>
+        <div class="res-stat">
+          <span class="rs-label">Time Taken</span>
+          <span class="rs-val" id="rTime">—</span>
+        </div>
+        <div class="res-stat">
+          <span class="rs-label">Tab Violations</span>
+          <span class="rs-val" id="rViolations">—</span>
+        </div>
+        <div class="res-stat">
+          <span class="rs-label">Submission</span>
+          <span class="rs-val" id="rSubmitType">—</span>
+        </div>
+      </div>
+
+      <div class="submission-log" id="submissionLog">
+        <div class="sub-line">Packaging code... <span class="sub-ok">Done</span></div>
+        <div class="sub-line" id="submitLine2">Sending to Google Sheets... <span class="sub-spin">●</span></div>
+        <div class="sub-line" id="submitLine3" style="display:none;"></div>
+      </div>
+
+      <div class="result-summary" id="resultSummary"></div>
+
+      <div class="descriptive-note">
+        📝 All code submissions have been recorded and will be reviewed by your instructor.
+      </div>
+
+      <button class="btn-restart" onclick="retryQuiz()">Restart Assessment</button>
+    </div>
+  </div>
+</div>
+
+<script src="questions.js"></script>
+<script src="quiz.js"></script>
+</body>
+</html>
