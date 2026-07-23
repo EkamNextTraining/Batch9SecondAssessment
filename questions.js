@@ -553,11 +553,11 @@ const QUESTIONS = [
     id: 45,
     part: "Part 3 — Live Coding",
     type: "coding",
-    category: "Trigger — Count Rollup (Bulkified)",
+    category: "Trigger — Before Insert",
     language: "Apex",
-    file: "CaseTrigger.cls",
-    scenario: "Whenever a Case is inserted, updated, or deleted, the related Account's custom field Total_Cases__c (Number) must be updated with the current total count of all Cases linked to that Account. The solution must use only one SOQL query and one DML statement regardless of how many Cases are processed.",
-    question: "Write the trigger CaseCountTrigger and a handler class CaseCountHandler with a static method updateCaseCount(Set<Id> accountIds) that recalculates and updates the count.",
+    file: "ContactTrigger.cls",
+    scenario: "Whenever a Contact is inserted with existing email trigger doe not allow to create a record in salesforce.",
+    question: "Prevent users from creating a Contact if another Contact already exists with the same Email.",
     placeholder: "",
     hint: ""
   }
