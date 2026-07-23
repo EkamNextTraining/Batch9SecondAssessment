@@ -510,8 +510,8 @@ const QUESTIONS = [
     file: "ContactTrigger.cls",
     scenario: "When a new Contact record is created, if the Description field is blank or null, it should automatically be set to 'New Contact - Needs Review' before the record is saved. This must work even if 200 Contacts are inserted at the same time.",
     question: "Write a before insert Apex trigger on the Contact object named ContactDefaultsTrigger that sets the default Description.",
-    placeholder: "trigger ContactDefaultsTrigger on Contact (before insert) {\n    for (Contact con : Trigger.new) {\n        // Write your logic here\n\n    }\n}",
-    hint: "Use String.isBlank(con.Description) to check if the field is empty. If true, set con.Description = 'New Contact - Needs Review'. No DML statement is needed — before triggers modify Trigger.new records directly before save."
+    placeholder: "",
+    hint: ""
   },
   {
     id: 42,
@@ -522,8 +522,8 @@ const QUESTIONS = [
     file: "AccountTrigger.cls",
     scenario: "Whenever a new Account is created, a follow-up Task must be automatically created for that Account. The Task should have Subject = 'Follow up with new Account', Status = 'Not Started', and Due Date = today + 7 days. The trigger must handle bulk inserts without hitting governor limits.",
     question: "Write a bulkified after insert trigger on the Account object named AccountTaskTrigger. Collect all Task records in a List and insert them with a single DML statement outside the loop.",
-    placeholder: "trigger AccountTaskTrigger on Account (after insert) {\n    List<Task> taskList = new List<Task>();\n\n    for (Account acc : Trigger.new) {\n        // Build the Task record here\n\n    }\n\n    if (!taskList.isEmpty()) {\n        insert taskList;\n    }\n}",
-    hint: "Inside the loop: Task t = new Task(); Set t.WhatId = acc.Id; t.Subject = 'Follow up with new Account'; t.Status = 'Not Started'; t.ActivityDate = Date.today() + 7; then taskList.add(t); Insert is done after the loop — never inside."
+    placeholder: "",
+    hint: ""
   },
   {
     id: 43,
@@ -534,8 +534,8 @@ const QUESTIONS = [
     file: "OpportunityTrigger.cls",
     scenario: "When an Opportunity's Stage is changed to 'Closed Won', a custom field Won_Date__c (Date) should automatically be set to today's date. If the Stage changes to anything else, Won_Date__c should be cleared. The trigger must compare old and new Stage values to detect the change.",
     question: "Write an after update trigger on Opportunity named OpportunityWonDateTrigger. Use Trigger.oldMap to detect the stage change and update the Won_Date__c field.",
-    placeholder: "trigger OpportunityWonDateTrigger on Opportunity (after update) {\n    List<Opportunity> oppToUpdate = new List<Opportunity>();\n\n    for (Opportunity opp : Trigger.new) {\n        Opportunity oldOpp = Trigger.oldMap.get(opp.Id);\n\n        // Detect stage change and set Won_Date__c\n\n    }\n\n    if (!oppToUpdate.isEmpty()) {\n        update oppToUpdate;\n    }\n}",
-    hint: "Compare opp.StageName != oldOpp.StageName to confirm the stage changed. If the new stage is 'Closed Won', create new Opportunity(Id = opp.Id, Won_Date__c = Date.today()) and add to the list. If stage changed to anything else, set Won_Date__c = null. Update after the loop."
+    placeholder: "",
+    hint: ""
   },
   {
     id: 44,
@@ -546,8 +546,8 @@ const QUESTIONS = [
     file: "AccountTrigger.cls",
     scenario: "The business has a rule that Customer accounts should never be deleted. If a user attempts to delete an Account where Type = 'Customer', the deletion must be blocked with the error message: 'Customer accounts cannot be deleted.'",
     question: "Write a before delete trigger on the Account object named AccountDeleteProtectionTrigger that blocks deletion of Customer type accounts using the addError() method.",
-    placeholder: "trigger AccountDeleteProtectionTrigger on Account (before delete) {\n    for (Account acc : Trigger.old) {\n        // Add your validation logic here\n\n    }\n}",
-    hint: "In a before delete trigger, use Trigger.old to access the records being deleted. Check if acc.Type == 'Customer'. If true, call acc.addError('Customer accounts cannot be deleted.') — this blocks the delete and shows the message."
+    placeholder: "",
+    hint: ""
   },
   {
     id: 45,
@@ -558,8 +558,8 @@ const QUESTIONS = [
     file: "CaseTrigger.cls",
     scenario: "Whenever a Case is inserted, updated, or deleted, the related Account's custom field Total_Cases__c (Number) must be updated with the current total count of all Cases linked to that Account. The solution must use only one SOQL query and one DML statement regardless of how many Cases are processed.",
     question: "Write the trigger CaseCountTrigger and a handler class CaseCountHandler with a static method updateCaseCount(Set<Id> accountIds) that recalculates and updates the count.",
-    placeholder: "trigger CaseCountTrigger on Case (after insert, after update, after delete) {\n    Set<Id> accountIds = new Set<Id>();\n\n    for (Case c : (Trigger.isDelete ? Trigger.old : Trigger.new)) {\n        if (c.AccountId != null) {\n            accountIds.add(c.AccountId);\n        }\n    }\n\n    CaseCountHandler.updateCaseCount(accountIds);\n}\n\npublic class CaseCountHandler {\n    public static void updateCaseCount(Set<Id> accountIds) {\n        // Step 1: Use aggregate SOQL to count Cases per Account\n        // Step 2: Build a Map of AccountId => Case Count\n        // Step 3: Update Account records with the new Total_Cases__c value\n\n    }\n}",
-    hint: "Use: SELECT AccountId, COUNT(Id) cnt FROM Case WHERE AccountId IN :accountIds GROUP BY AccountId — returns AggregateResult records. Loop: Id accId = (Id)ar.get('AccountId'); Integer cnt = (Integer)ar.get('cnt'); Build Account records with Total_Cases__c, then update in one DML call."
+    placeholder: "",
+    hint: ""
   }
 
 ];
